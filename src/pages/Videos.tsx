@@ -1,5 +1,7 @@
 import { useQuery } from '@tanstack/react-query';
 import { useParams } from 'react-router-dom';
+import MockYoutube from '../api/mockYoutube';
+import Youtube from '../api/youtube';
 import VideoCard, { VideoCardType } from '../components/VideoCard';
 
 export default function Videos() {
@@ -9,10 +11,10 @@ export default function Videos() {
     isLoading,
     error,
   } = useQuery<VideoCardType[]>(['videos', keyword], async () => {
-    return fetch(`/videos/${keyword ? 'search' : 'popular'}.json`)
-      .then((res) => res.json())
-      .then((data) => data.items);
+    const youtube = new Youtube();
+    return youtube.search(keyword);
   });
+
   return (
     <>
       <div>Videos {keyword ?? '🌟'}</div>
