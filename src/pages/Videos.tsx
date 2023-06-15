@@ -10,13 +10,12 @@ export default function Videos() {
     data: videos,
     isLoading,
     error,
-  } = useQuery<VideoCardType[]>(['videos', keyword], async () => {
-    return youtube?.search(keyword);
-  });
+  } = useQuery<VideoCardType[]>(['videos', keyword], async () =>
+    youtube?.search(keyword)
+  );
 
   return (
     <>
-      <div>Videos {keyword ?? '🌟'}</div>
       {isLoading && <p>Loading...</p>}
       {error && <p>Something is wrong</p>}
       {videos && (
