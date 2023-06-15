@@ -1,3 +1,4 @@
+import { useNavigate } from 'react-router-dom';
 import { formatAgo } from '../util/date';
 
 type ThumbnailType = {
@@ -15,6 +16,8 @@ type VideoSnippetType = {
     high: ThumbnailType;
   };
   channelTitle: string;
+  channelId: string;
+  description: string;
 };
 
 export type VideoCardType = {
@@ -22,10 +25,17 @@ export type VideoCardType = {
   snippet: VideoSnippetType;
 };
 
-export default function VideoCard({ snippet }: VideoCardType) {
-  const { title, thumbnails, channelTitle, publishedAt } = snippet;
+export default function VideoCard(video: VideoCardType) {
+  const { title, thumbnails, channelTitle, publishedAt } = video.snippet;
+  const navigate = useNavigate();
   return (
-    <li>
+    <li
+      onClick={() =>
+        navigate(`/videos/watch/${video.id}`, {
+          state: { video },
+        })
+      }
+    >
       <img
         className='w-full object-cover'
         src={thumbnails.medium.url}
