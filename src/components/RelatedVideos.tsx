@@ -11,8 +11,12 @@ export default function RelatedVideos({ id }: Props) {
     data: videos,
     isLoading,
     error,
-  } = useQuery<VideoCardType[]>(['related', id], async () =>
-    youtube?.relatedVideos(id)
+  } = useQuery<VideoCardType[]>(
+    ['related', id],
+    async () => youtube?.relatedVideos(id),
+    {
+      staleTime: 1000 * 60 * 5,
+    }
   );
 
   return (
@@ -22,7 +26,7 @@ export default function RelatedVideos({ id }: Props) {
       {videos && (
         <ul>
           {videos.map(({ id, snippet }) => (
-            <VideoCard key={id} id={id} snippet={snippet} />
+            <VideoCard key={id} id={id} snippet={snippet} type='list' />
           ))}
         </ul>
       )}

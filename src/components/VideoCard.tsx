@@ -1,5 +1,6 @@
 import { useNavigate } from 'react-router-dom';
 import { formatAgo } from '../util/date';
+import { cls } from '../util/utils';
 
 type ThumbnailType = {
   url: string;
@@ -23,21 +24,23 @@ type VideoSnippetType = {
 export type VideoCardType = {
   id: string;
   snippet: VideoSnippetType;
+  type?: 'list';
 };
 
-export default function VideoCard(video: VideoCardType) {
-  const { title, thumbnails, channelTitle, publishedAt } = video.snippet;
+export default function VideoCard({ id, snippet, type }: VideoCardType) {
+  const { title, thumbnails, channelTitle, publishedAt } = snippet;
   const navigate = useNavigate();
   return (
     <li
+      className={cls(type === 'list' ? 'flex gap-4 m-2' : '')}
       onClick={() =>
-        navigate(`/videos/watch/${video.id}`, {
-          state: { video },
+        navigate(`/videos/watch/${id}`, {
+          state: { video: { id, snippet } },
         })
       }
     >
       <img
-        className='w-full object-cover'
+        className={cls('object-cover', type === 'list' ? 'w-60' : 'w-full')}
         src={thumbnails.medium.url}
         alt={title}
       />

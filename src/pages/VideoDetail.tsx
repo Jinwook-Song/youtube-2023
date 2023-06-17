@@ -9,8 +9,8 @@ export default function VideoDetail() {
     snippet: { title, channelId, channelTitle, description },
   } = useLocation().state?.video as VideoCardType;
   return (
-    <section>
-      <article>
+    <section className='flex flex-col lg:flex-row'>
+      <article className='basis-2/3'>
         <iframe
           title={title}
           id='player'
@@ -18,13 +18,13 @@ export default function VideoDetail() {
           height={640}
           src={`https://www.youtube.com/embed/${id}`}
         />
-        <div>
-          <h2>{title}</h2>
+        <div className='p-8'>
+          <h2 className='text-xl font-semibold'>{title}</h2>
           <ChannelInfo id={channelId} name={channelTitle} />
-          <pre>{description}</pre>
+          <pre className='whitespace-pre-wrap'>{description}</pre>
         </div>
       </article>
-      <section>
+      <section className='basis-1/3'>
         <RelatedVideos id={id} />
       </section>
     </section>

@@ -10,8 +10,12 @@ export default function Videos() {
     data: videos,
     isLoading,
     error,
-  } = useQuery<VideoCardType[]>(['videos', keyword], async () =>
-    youtube?.search(keyword)
+  } = useQuery<VideoCardType[]>(
+    ['videos', keyword],
+    async () => youtube?.search(keyword),
+    {
+      staleTime: 1000 * 60 * 1,
+    }
   );
 
   return (
