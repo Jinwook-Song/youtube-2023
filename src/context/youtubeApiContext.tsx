@@ -6,7 +6,7 @@ import YoutubeClient from '../api/youtubeClient';
 let client: MockYoutubeClient | YoutubeClient;
 
 client = new MockYoutubeClient();
-// client = new YoutubeClient();
+client = new YoutubeClient();
 
 const youtube = new Youtube(client);
 
